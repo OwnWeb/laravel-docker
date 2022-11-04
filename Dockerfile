@@ -43,7 +43,11 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     pcntl \
     soap \
     zip \
-    pcov
+    pcov \
+    sodium
+
+# Install prettier globally
+RUN npm install -g prettier
 
 # Add local and global vendor bin to PATH.
 ENV PATH ./vendor/bin:/composer/vendor/bin:/root/.composer/vendor/bin:/usr/local/bin:$PATH
@@ -53,6 +57,9 @@ RUN composer global require "squizlabs/php_codesniffer=*"
 
 # Install PHP CS Fixer
 RUN composer global require "friendsofphp/php-cs-fixer"
+
+# Disable memory limit for PHP
+RUN echo memory_limit = -1 >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
 
 # Setup working directory
 WORKDIR /var/www
