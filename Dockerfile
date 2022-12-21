@@ -61,6 +61,10 @@ RUN composer global require "friendsofphp/php-cs-fixer"
 # Disable memory limit for PHP
 RUN echo memory_limit = -1 >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
 
+# Set upload limit to 10MB
+RUN echo upload_max_filesize = 10M >> /usr/local/etc/php/conf.d/docker-php-filesize-limit.ini;
+RUN echo post_max_size = 10M >> /usr/local/etc/php/conf.d/docker-php-filesize-limit.ini;
+
 # Setup working directory
 WORKDIR /var/www
 
